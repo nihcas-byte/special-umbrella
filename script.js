@@ -558,8 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing Email...';
       }
 
-      // Compose mailto to Sachin Tomer
-      const recipient = 'itsachintomer@gmail.com';
+      // Compose mailto
+      const recipient = 'contact@sachintomer.dev';
       const subject = encodeURIComponent(`Azure DevOps & Cloud Infrastructure Inquiry from ${name}`);
       const body = encodeURIComponent(`Hello Sachin,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`);
 

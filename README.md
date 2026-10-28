@@ -97,7 +97,7 @@ git push -u origin main
 ## 📜 Contact Details
 
 - **Name**: Sachin Tomer
-- **Phone**: [+91-8796445573](tel:+918796445573)
-- **Email**: [itsachintomer@gmail.com](mailto:itsachintomer@gmail.com)
+- **Email**: `contact@sachintomer.dev` *(or via portfolio contact form)*
+- **Phone**: `+91-XXXXXXXXXX` *(Available on Request)*
 - **LinkedIn**: [https://www.linkedin.com/in/tomersachin/](https://www.linkedin.com/in/tomersachin/)
 - **Location**: Noida / Delhi NCR, India
