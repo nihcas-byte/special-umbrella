@@ -1,7 +1,7 @@
 /**
  * ==========================================================================
- * ENTERPRISE DEVOPS & CLOUD ARCHITECT PORTFOLIO - CORE ENGINE
- * Interactive Terminal Simulator, Theme Engine, Filtering & Animations
+ * SACHIN TOMER - DEVOPS ENGINEER & CLOUD INFRASTRUCTURE SPECIALIST
+ * Interactive Azure Pipeline Simulator, Theme Engine, Filtering & Animations
  * ==========================================================================
  */
 
@@ -124,11 +124,11 @@ document.addEventListener('DOMContentLoaded', () => {
      -------------------------------------------------------------------------- */
   const typewriterElement = document.getElementById('typewriter-text');
   const roles = [
-    'Senior DevOps & Cloud Architect',
-    'Platform & Reliability Engineer (SRE)',
-    'Kubernetes & GitOps Specialist',
-    'Infrastructure as Code (Terraform) Lead',
-    'Enterprise DevSecOps Practitioner'
+    'DevOps Engineer',
+    'Terraform & Cloud Infrastructure Specialist',
+    'Azure Cloud & Landing Zone Architect',
+    'DevSecOps Consultant',
+    'Azure OpenAI & RAG Solutions Explorer'
   ];
 
   let roleIndex = 0;
@@ -208,10 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', runStatsCounter);
-  runStatsCounter(); // Check initial position
+  runStatsCounter();
 
   /* --------------------------------------------------------------------------
-     6. INTERACTIVE CI/CD & TERRAFORM TERMINAL SIMULATOR
+     6. INTERACTIVE AZURE CI/CD & TERRAFORM TERMINAL SIMULATOR
      -------------------------------------------------------------------------- */
   const terminalConsole = document.getElementById('terminal-console');
   const btnRunPipeline = document.getElementById('btn-run-pipeline');
@@ -258,105 +258,97 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnRunPipeline) btnRunPipeline.disabled = true;
 
     terminalConsole.innerHTML = '';
-    appendTerminalLine('<span class="bold cyan">▶ TRIGGER:</span> Production CI/CD Pipeline invoked by commit [main@4f8b92a]', 'bold');
-    appendTerminalLine('Runner: <span class="purple">enterprise-runner-aks-cluster-01</span> • Architecture: linux/amd64', 'dim');
-    appendTerminalLine('Environment: <span class="cyan">Production Multi-Region (AWS & Azure)</span>', 'dim');
+    appendTerminalLine('<span class="bold cyan">▶ TRIGGER:</span> Azure DevOps YAML Pipeline invoked by commit [main@caf-v2.4]', 'bold');
+    appendTerminalLine('Agent: <span class="purple">sify-managed-devops-pool-vmss-02</span> • OS: Ubuntu 22.04 LTS (x64)', 'dim');
+    appendTerminalLine('Subscription: <span class="cyan">Enterprise Production Landing Zone (Azure CAF)</span>', 'dim');
     appendTerminalLine('------------------------------------------------------------------------', 'dim');
     await delay(600);
 
-    // STAGE 1: Lint & Static Code Analysis
+    // STAGE 1: Lint & YAML Validation
     if (stages[0]) stages[0].classList.add('active');
-    appendTerminalLine('<span class="yellow">⚡ [STAGE 1/6] Code Quality & Static Analysis</span>');
+    appendTerminalLine('<span class="yellow">⚡ [STAGE 1/6] Azure DevOps YAML Linting & PowerShell Task Verification</span>');
     await delay(400);
-    appendTerminalLine('$ hadolint ./Dockerfile --ignore DL3008', 'dim');
-    appendTerminalLine('✓ Dockerfile validated: 0 syntax issues', 'green');
-    appendTerminalLine('$ tflint --recursive --minimum-failure-severity=error', 'dim');
-    appendTerminalLine('✓ Terraform linting passed (84 modules verified)', 'green');
-    appendTerminalLine('$ sonar-scanner -Dsonar.projectKey=enterprise-platform', 'dim');
-    appendTerminalLine('✓ SonarQube Quality Gate: PASSED (Bugs: 0, Security Hotspots: 0, Coverage: 88.4%)', 'green');
+    appendTerminalLine('$ az pipelines validate --pipeline-id 84 --path /azure-pipelines.yml', 'dim');
+    appendTerminalLine('✓ Pipeline YAML syntax validated: 0 schema errors', 'green');
+    appendTerminalLine('$ tflint --module --config=.tflint.hcl', 'dim');
+    appendTerminalLine('✓ Terraform linting passed (reusable modules verified)', 'green');
     if (stages[0]) {
       stages[0].classList.remove('active');
       stages[0].classList.add('completed');
     }
     await delay(700);
 
-    // STAGE 2: Security & DevSecOps Secret Scan
+    // STAGE 2: Security & Static Analysis (tfsec & Checkov)
     if (stages[1]) stages[1].classList.add('active');
     appendTerminalLine('');
-    appendTerminalLine('<span class="yellow">🔒 [STAGE 2/6] DevSecOps Secret & Vulnerability Scan</span>');
+    appendTerminalLine('<span class="yellow">🔒 [STAGE 2/6] DevSecOps Static Analysis (tfsec & Checkov)</span>');
     await delay(400);
-    appendTerminalLine('$ trufflehog git file://. --since-commit HEAD~1', 'dim');
-    appendTerminalLine('✓ TruffleHog: 0 private keys or leaked credentials detected', 'green');
-    appendTerminalLine('$ tfsec ./terraform --concise-output', 'dim');
-    appendTerminalLine('✓ tfsec IaC Static Scanner: 0 High/Critical misconfigurations', 'green');
+    appendTerminalLine('$ tfsec ./terraform/modules/landing-zone --concise-output', 'dim');
+    appendTerminalLine('✓ tfsec scanner: 0 critical misconfigurations found', 'green');
+    appendTerminalLine('$ checkov -d ./terraform --framework terraform', 'dim');
+    appendTerminalLine('✓ Checkov: CIS Microsoft Azure Benchmark v2.0 - 100% Passed (118 checks)', 'green');
     if (stages[1]) {
       stages[1].classList.remove('active');
       stages[1].classList.add('completed');
     }
     await delay(700);
 
-    // STAGE 3: Terraform Enterprise IaC
+    // STAGE 3: Secret Detection (TruffleHog)
     if (stages[2]) stages[2].classList.add('active');
     appendTerminalLine('');
-    appendTerminalLine('<span class="yellow">☁ [STAGE 3/6] Infrastructure as Code (Terraform Enterprise)</span>');
+    appendTerminalLine('<span class="yellow">🔑 [STAGE 3/6] Secret Detection & Azure Key Vault Attestation</span>');
     await delay(400);
-    appendTerminalLine('$ terraform init -backend-config="key=prod/infra.tfstate"', 'dim');
-    appendTerminalLine('Acquiring state lock on AWS DynamoDB / Azure Blob Storage... OK', 'dim');
-    appendTerminalLine('Terraform initialized with 14 providers.', 'dim');
-    appendTerminalLine('$ terraform plan -out=tfplan -detailed-exitcode', 'dim');
-    appendTerminalLine('Plan: <span class="cyan">4 to add, 2 to change, 0 to destroy.</span> (Zero unwanted drift detected)', 'green');
+    appendTerminalLine('$ trufflehog git file://. --since-commit HEAD~1 --fail', 'dim');
+    appendTerminalLine('✓ TruffleHog: 0 private keys or leaked credentials detected', 'green');
+    appendTerminalLine('$ az keyvault secret list --vault-name kv-sify-prod-01 --query "[].id" -o tsv', 'dim');
+    appendTerminalLine('✓ Secrets & Managed Identities verified with least-privilege RBAC', 'green');
     if (stages[2]) {
       stages[2].classList.remove('active');
       stages[2].classList.add('completed');
     }
-    await delay(800);
+    await delay(700);
 
-    // STAGE 4: Policy as Code (OPA & Checkov)
+    // STAGE 4: Terraform Plan with Remote State Lock
     if (stages[3]) stages[3].classList.add('active');
     appendTerminalLine('');
-    appendTerminalLine('<span class="yellow">🛡 [STAGE 4/6] Policy as Code & Enterprise Compliance</span>');
+    appendTerminalLine('<span class="yellow">☁ [STAGE 4/6] Terraform Plan with Azure Storage State Lock</span>');
     await delay(400);
-    appendTerminalLine('$ checkov -f tfplan --framework terraform_plan', 'dim');
-    appendTerminalLine('✓ CIS Benchmark (AWS/Azure v2.0): 100% Passed (142 checks)', 'green');
-    appendTerminalLine('$ opa eval --data ./policies/ingress-tls.rego --input tfplan', 'dim');
-    appendTerminalLine('✓ Mandatory TLS 1.3 & Encrypted Volumes: ENFORCED', 'green');
+    appendTerminalLine('$ terraform init -backend-config="storage_account_name=sifytfstate"', 'dim');
+    appendTerminalLine('Acquiring state lease on Azure Blob Storage [container: tfstate, blob: prod.tfstate]... OK', 'dim');
+    appendTerminalLine('$ terraform plan -out=tfplan -detailed-exitcode', 'dim');
+    appendTerminalLine('Plan: <span class="cyan">6 to add, 1 to change, 0 to destroy.</span> (Hub-spoke network updates)', 'green');
     if (stages[3]) {
       stages[3].classList.remove('active');
       stages[3].classList.add('completed');
     }
-    await delay(700);
+    await delay(800);
 
-    // STAGE 5: Container Build & Cryptographic Signing
+    // STAGE 5: Azure Policy & Defender for Cloud Compliance
     if (stages[4]) stages[4].classList.add('active');
     appendTerminalLine('');
-    appendTerminalLine('<span class="yellow">📦 [STAGE 5/6] Multi-Arch Image Build & Cosign Attestation</span>');
+    appendTerminalLine('<span class="yellow">🛡 [STAGE 5/6] Azure Policy Initiatives & Defender for Cloud Evaluation</span>');
     await delay(400);
-    appendTerminalLine('$ docker buildx build --platform linux/amd64,linux/arm64 -t registry/app:v2.14.0 .', 'dim');
-    appendTerminalLine('✓ Image digest: sha256:7b5d1e43a992bc9f... built in 18.4s', 'dim');
-    appendTerminalLine('$ trivy image --severity HIGH,CRITICAL registry/app:v2.14.0', 'dim');
-    appendTerminalLine('✓ Trivy Vulnerability Scan: 0 Critical, 0 High CVEs', 'green');
-    appendTerminalLine('$ cosign sign --key k8s://kms/prod-cosign-key registry/app:v2.14.0', 'dim');
-    appendTerminalLine('✓ Supply-Chain Security: Signature & SBOM successfully published', 'green');
+    appendTerminalLine('$ az policy state summarize --subscription "Enterprise-Prod"', 'dim');
+    appendTerminalLine('✓ Allowed Regions Policy (East US, Central India): COMPLIANT', 'green');
+    appendTerminalLine('✓ Mandatory Tags Policy (Owner, CostCenter, Environment): COMPLIANT', 'green');
+    appendTerminalLine('✓ Customer-Managed Key (CMK) Encryption at Rest: ENFORCED', 'green');
     if (stages[4]) {
       stages[4].classList.remove('active');
       stages[4].classList.add('completed');
     }
-    await delay(800);
+    await delay(700);
 
-    // STAGE 6: GitOps ArgoCD Sync & Kubernetes Rollout
+    // STAGE 6: Cloud Adoption Framework (CAF) Landing Zone Deployment
     if (stages[5]) stages[5].classList.add('active');
     appendTerminalLine('');
-    appendTerminalLine('<span class="yellow">🚀 [STAGE 6/6] GitOps Sync & Canary Rollout (ArgoCD & EKS/AKS)</span>');
+    appendTerminalLine('<span class="yellow">🚀 [STAGE 6/6] Zero-Downtime Deployment & Observability Linkage</span>');
     await delay(400);
-    appendTerminalLine('$ git commit -am "chore(gitops): update image tag v2.14.0" && git push origin main', 'dim');
-    appendTerminalLine('$ argocd app sync enterprise-banking-core --prune', 'dim');
-    appendTerminalLine('ArgoCD Controller: Fetching desired Git manifest revision [v2.14.0]...', 'cyan');
-    appendTerminalLine('Applying progressive canary traffic shift: [10% -> 25% -> 50% -> 100%]', 'dim');
-    appendTerminalLine('$ kubectl rollout status deployment/core-service -n production --timeout=90s', 'dim');
-    appendTerminalLine('✓ deployment "core-service" successfully rolled out with ZERO downtime.', 'green');
+    appendTerminalLine('$ terraform apply -auto-approve tfplan', 'dim');
+    appendTerminalLine('Applying Azure Firewall rules & Private Endpoints... OK (Done in 38s)', 'cyan');
+    appendTerminalLine('Linking diagnostic logs to Azure Log Analytics Workspace & Prometheus...', 'dim');
     appendTerminalLine('========================================================================', 'dim');
-    appendTerminalLine('<span class="bold green">✔ PIPELINE EXECUTION SUCCESSFUL: All 6 stages completed in 42.1s</span>', 'bold');
-    appendTerminalLine('<span class="dim">Telemetry sent to Prometheus / Datadog. PagerDuty status: HEALTHY (99.99% SLA).</span>', 'dim');
+    appendTerminalLine('<span class="bold green">✔ PIPELINE EXECUTION COMPLETED: Landing Zone updated with ZERO downtime.</span>', 'bold');
+    appendTerminalLine('<span class="dim">Telemetry logged to Azure Monitor. Production SLA remains at 99.9%.</span>', 'dim');
 
     if (stages[5]) {
       stages[5].classList.remove('active');
@@ -365,44 +357,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnRunPipeline) btnRunPipeline.disabled = false;
     isPipelineRunning = false;
-    showToast('CI/CD Pipeline Completed Successfully (Zero Downtime)');
+    showToast('Azure Pipeline Executed Successfully (Zero Downtime)');
   }
 
-  // DRIFT SIMULATION
+  // SIMULATE DRIFT
   async function simulateDrift() {
     if (isPipelineRunning) return;
     isPipelineRunning = true;
     resetStages();
     terminalConsole.innerHTML = '';
 
-    appendTerminalLine('<span class="yellow bold">⚠ SIMULATION: Scheduled Infrastructure Drift Detection Triggered</span>');
-    appendTerminalLine('Checking live cloud state vs Terraform remote backend...', 'dim');
+    appendTerminalLine('<span class="yellow bold">⚠ SIMULATION: Azure Scheduled Drift Detection Triggered</span>');
+    appendTerminalLine('Comparing live Azure ARM resources against Terraform state...', 'dim');
     await delay(600);
 
     appendTerminalLine('$ terraform plan -detailed-exitcode -refresh-only', 'dim');
     await delay(800);
 
-    appendTerminalLine('<span class="red">✘ DRIFT DETECTED: Live state differs from Git-committed IaC!</span>', 'bold');
-    appendTerminalLine('  ~ module.security_groups.aws_security_group_rule.ingress_443', 'yellow');
-    appendTerminalLine('    - Ingress CIDR manually modified in AWS Console from 10.0.0.0/16 to 0.0.0.0/0', 'red');
-    appendTerminalLine('  ~ module.aks_cluster.kubernetes_cluster.node_pool', 'yellow');
-    appendTerminalLine('    - Max pods auto-scale setting altered out-of-band', 'yellow');
+    appendTerminalLine('<span class="red">✘ DRIFT DETECTED: Azure Portal modification identified out-of-band!</span>', 'bold');
+    appendTerminalLine('  ~ azurerm_network_security_rule.allow_ssh', 'yellow');
+    appendTerminalLine('    - Ingress source address manually widened from 10.10.0.0/16 to 0.0.0.0/0 in Azure Portal', 'red');
     await delay(600);
 
-    appendTerminalLine('<span class="cyan">⚡ AUTO-REMEDIATION (Zero Drift Enforcement Policy):</span>');
+    appendTerminalLine('<span class="cyan">⚡ AUTO-REMEDIATION (Policy-as-Code Enforcement):</span>');
     appendTerminalLine('$ terraform apply -auto-approve tfplan-remediate', 'dim');
     await delay(700);
 
-    appendTerminalLine('✓ Overwrote manual AWS console modifications.', 'green');
-    appendTerminalLine('✓ Security group restored to strictly governed CIDR 10.0.0.0/16.', 'green');
-    appendTerminalLine('✓ Drift Alert sent to Slack #cloud-secops with CloudTrail audit log.', 'green');
-    appendTerminalLine('<span class="bold green">✔ Drift auto-corrected! Production environment remains 100% compliant.</span>', 'bold');
+    appendTerminalLine('✓ Out-of-band Azure Portal rule overwritten.', 'green');
+    appendTerminalLine('✓ Network Security Group restored to strictly governed CIDR 10.10.0.0/16.', 'green');
+    appendTerminalLine('✓ Drift security notification sent to Microsoft Sentinel & PagerDuty.', 'green');
+    appendTerminalLine('<span class="bold green">✔ Zero-Drift policy enforced! Azure infrastructure remains compliant.</span>', 'bold');
 
     isPipelineRunning = false;
     showToast('Drift simulation completed: Auto-remediated');
   }
 
-  // CVE DETECTION SIMULATION
+  // SIMULATE TFSEC MISCONFIGURATION BLOCKER
   async function simulateCVE() {
     if (isPipelineRunning) return;
     isPipelineRunning = true;
@@ -410,19 +400,19 @@ document.addEventListener('DOMContentLoaded', () => {
     terminalConsole.innerHTML = '';
 
     appendTerminalLine('<span class="yellow bold">🛡 SIMULATION: DevSecOps Shift-Left Security Gate Check</span>');
-    appendTerminalLine('Scanning incoming developer PR [#142] for vulnerabilities...', 'dim');
+    appendTerminalLine('Scanning incoming developer Pull Request [#58] for Azure security issues...', 'dim');
     await delay(500);
 
     if (stages[0]) stages[0].classList.add('completed');
     if (stages[1]) stages[1].classList.add('active');
 
-    appendTerminalLine('$ trivy fs --security-checks vuln,config,secret .', 'dim');
+    appendTerminalLine('$ tfsec ./terraform --concise-output', 'dim');
     await delay(700);
 
-    appendTerminalLine('<span class="red bold">✘ HIGH SEVERITY CVE IDENTIFIED: CVE-2024-3094 (xz-utils)</span>');
-    appendTerminalLine('  Package: liblzma5: 5.6.0-0.2', 'red');
-    appendTerminalLine('  Remediation: Upgrade package to >= 5.6.1 in base Docker image', 'yellow');
-    appendTerminalLine('  Policy Violation: Enterprise DevSecOps blocks merge of HIGH/CRITICAL CVEs', 'red');
+    appendTerminalLine('<span class="red bold">✘ CRITICAL VIOLATION: AVD-AZU-0009 (Storage Account Public Access Allowed)</span>');
+    appendTerminalLine('  Resource: azurerm_storage_account.customer_data_store', 'red');
+    appendTerminalLine('  Issue: allow_nested_items_to_be_public is set to true', 'red');
+    appendTerminalLine('  Remediation: Set allow_nested_items_to_be_public = false and enforce private endpoint', 'yellow');
     await delay(600);
 
     if (stages[1]) {
@@ -430,12 +420,12 @@ document.addEventListener('DOMContentLoaded', () => {
       stages[1].classList.add('failed');
     }
 
-    appendTerminalLine('<span class="red bold">✘ PULL REQUEST MERGE REJECTED: Security gate failed.</span>');
-    appendTerminalLine('✓ Automated PR comment generated with upgrade instructions & dependency tree.', 'dim');
-    appendTerminalLine('✓ Production remained protected from supply-chain threat.', 'green');
+    appendTerminalLine('<span class="red bold">✘ PULL REQUEST MERGE BLOCKED: DevSecOps gate rejected release.</span>');
+    appendTerminalLine('✓ Automated comment posted to Azure DevOps PR with remediation snippet.', 'dim');
+    appendTerminalLine('✓ Production data lake remains protected from public exposure.', 'green');
 
     isPipelineRunning = false;
-    showToast('Security gate simulation: Blocked vulnerable build');
+    showToast('DevSecOps gate simulation: Blocked unencrypted resource');
   }
 
   if (btnRunPipeline) {
@@ -568,10 +558,10 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing Email...';
       }
 
-      // Compose mailto
-      const recipient = 'devops.consultant.lead@example.com';
-      const subject = encodeURIComponent(`DevOps & Cloud Inquiry from ${name}`);
-      const body = encodeURIComponent(`Hello,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`);
+      // Compose mailto to Sachin Tomer
+      const recipient = 'itsachintomer@gmail.com';
+      const subject = encodeURIComponent(`Azure DevOps & Cloud Infrastructure Inquiry from ${name}`);
+      const body = encodeURIComponent(`Hello Sachin,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`);
 
       setTimeout(() => {
         window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
@@ -586,4 +576,3 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
-
