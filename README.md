@@ -129,3 +129,4 @@ To preview locally in your browser:
 
 ## 📜 License
 MIT License — Free to use, customize, and share.
+
