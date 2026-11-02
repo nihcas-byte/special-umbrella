@@ -3,399 +3,409 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sachin Tomer — Resume</title>
+  <title>Resume — Sachin Tomer | DevOps Engineer</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Roboto+Mono:wght@400;500;600&display=swap');
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'Roboto', sans-serif;
-      font-size: 13px;
+      font-size: 13.5px;
       line-height: 1.55;
-      color: #1e293b;
-      background: #f8f9fa;
+      color: #1e2229;
+      background: #eef0f3;
+      padding: 30px 15px;
     }
 
-    .page {
-      max-width: 820px;
-      margin: 32px auto;
-      background: #fff;
-      border: 1px solid #e2e8f0;
+    .action-bar {
+      max-width: 860px;
+      margin: 0 auto 16px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #ff6b35;
+      color: #ffffff;
+      border-color: #ff6b35;
+    }
+
+    .btn-primary:hover {
+      background: #e65100;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: #1e2229;
+      border-color: #d1d5db;
+    }
+
+    .btn-secondary:hover {
+      background: #f3f4f6;
+    }
+
+    .resume-sheet {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
-      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 42px 48px;
     }
 
     /* Header */
     .resume-header {
-      background: #0a0a0f;
-      color: #e2e8f0;
-      padding: 32px 40px;
+      border-bottom: 2px solid #ff6b35;
+      padding-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .rh-name {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -.02em;
-      color: #f1f5f9;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #111827;
+      text-transform: uppercase;
+      margin-bottom: 4px;
     }
 
     .rh-title {
-      font-size: .95rem;
-      color: #94a3b8;
-      margin-top: 4px;
-      font-weight: 400;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #e65100;
+      margin-bottom: 12px;
     }
 
     .rh-meta {
       display: flex;
-      gap: 24px;
-      margin-top: 16px;
       flex-wrap: wrap;
+      gap: 16px;
+      font-size: 12.5px;
+      color: #4b5563;
     }
 
     .rh-meta a {
-      font-size: .8rem;
-      color: #818cf8;
+      color: inherit;
       text-decoration: none;
     }
 
-    .rh-meta span {
-      font-size: .8rem;
-      color: #64748b;
+    .rh-meta a:hover {
+      color: #e65100;
+      text-decoration: underline;
     }
 
-    /* Stats bar */
-    .stats-bar {
+    /* Sections */
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #e65100;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    .summary-p {
+      color: #374151;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Skills Pill Grid */
+    .skills-row {
       display: flex;
-      gap: 0;
-      background: #111118;
-      border-bottom: 1px solid #1e1e2e;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    .stat-cell {
-      flex: 1;
-      padding: 14px 20px;
-      text-align: center;
-      border-right: 1px solid #1e1e2e;
-    }
-
-    .stat-cell:last-child { border-right: none; }
-
-    .stat-num {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #818cf8;
-      display: block;
-    }
-
-    .stat-lbl {
-      font-size: .68rem;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    /* Body */
-    .resume-body {
-      padding: 32px 40px;
-    }
-
-    /* Section */
-    .rs {
-      margin-bottom: 28px;
-    }
-
-    .rs-title {
-      font-size: .65rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: #6366f1;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #e2e8f0;
-      margin-bottom: 14px;
-    }
-
-    /* Summary */
-    .summary {
-      font-size: .875rem;
-      color: #475569;
-      line-height: 1.65;
+    .skill-pill {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      color: #1f2937;
     }
 
     /* Experience */
-    .exp-item {
-      margin-bottom: 18px;
+    .exp-entry {
+      margin-bottom: 16px;
     }
 
-    .exp-item:last-child { margin-bottom: 0; }
-
-    .exp-row {
+    .exp-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      gap: 8px;
+      margin-bottom: 3px;
     }
 
     .exp-role {
-      font-size: .9rem;
+      font-size: 14px;
       font-weight: 700;
-      color: #0f172a;
+      color: #111827;
     }
 
-    .exp-period {
-      font-size: .75rem;
-      color: #94a3b8;
+    .exp-date {
       font-family: 'Roboto Mono', monospace;
-      white-space: nowrap;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #6b7280;
     }
 
     .exp-company {
-      font-size: .8rem;
-      color: #6366f1;
-      font-weight: 500;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #e65100;
       margin-bottom: 6px;
     }
 
-    .exp-bullets {
-      padding-left: 0;
-      list-style: none;
+    .exp-ul {
+      list-style-type: square;
+      padding-left: 18px;
+      color: #374151;
+      font-size: 12.5px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .exp-bullets li {
-      font-size: .82rem;
-      color: #475569;
-      padding-left: 14px;
-      position: relative;
-      margin-bottom: 3px;
-      line-height: 1.55;
+    .exp-ul li {
+      line-height: 1.5;
     }
 
-    .exp-bullets li::before {
-      content: '▸';
-      position: absolute;
-      left: 0;
-      color: #6366f1;
-      font-size: .65rem;
-      top: 2px;
-    }
-
-    /* Skills grid */
-    .skills-table {
+    /* Certs & Edu */
+    .cert-grid {
       display: grid;
-      grid-template-columns: 130px 1fr;
-      gap: 6px 12px;
-      align-items: baseline;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
     }
 
-    .skill-cat {
-      font-size: .75rem;
-      font-weight: 600;
-      color: #475569;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-    }
-
-    .skill-vals {
-      font-size: .82rem;
-      color: #1e293b;
-    }
-
-    /* Certs */
-    .cert-list { list-style: none; }
-
-    .cert-list li {
-      font-size: .82rem;
-      color: #1e293b;
-      padding-left: 14px;
-      position: relative;
-      margin-bottom: 4px;
-    }
-
-    .cert-list li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: #22c55e;
-      font-size: .7rem;
-    }
-
-    /* Print */
-    @media print {
-      body { background: #fff; }
-      .page { margin: 0; border: none; border-radius: 0; box-shadow: none; }
-      .print-btn { display: none; }
-    }
-
-    /* Print button */
-    .print-bar {
-      text-align: right;
-      padding: 12px 40px 0;
-    }
-
-    .print-btn {
-      background: #6366f1;
-      color: #fff;
-      border: none;
+    .cert-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
       border-radius: 6px;
-      padding: 8px 18px;
-      font-size: .8rem;
-      font-family: 'Roboto', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
+      padding: 10px 14px;
     }
 
-    .print-btn:hover { background: #818cf8; }
+    .cert-box strong {
+      display: block;
+      font-size: 13px;
+      color: #111827;
+      margin-bottom: 2px;
+    }
+
+    .cert-box span {
+      font-size: 11.5px;
+      color: #e65100;
+      font-weight: 600;
+    }
+
+    .edu-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13px;
+    }
+
+    .edu-degree {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .edu-school {
+      color: #4b5563;
+      font-size: 12px;
+    }
+
+    .edu-date {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11.5px;
+      color: #6b7280;
+    }
+
+    /* Print Optimization */
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      .action-bar {
+        display: none !important;
+      }
+      .resume-sheet {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .exp-entry {
+        page-break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body>
 
-<div class="page">
-  <div class="print-bar">
-    <button class="print-btn" onclick="window.print()">⬇ Print / Save PDF</button>
+  <!-- Top Navigation & Action -->
+  <div class="action-bar">
+    <a href="index.html" class="btn btn-secondary">← Back to Portfolio</a>
+    <button onclick="window.print()" class="btn btn-primary">Print / Save as PDF</button>
   </div>
 
-  <!-- Header -->
-  <div class="resume-header">
-    <div class="rh-name">Sachin Tomer</div>
-    <div class="rh-title">DevOps Engineer · Terraform · Azure · DevSecOps</div>
-    <div class="rh-meta">
-      <span>📍 Noida, India</span>
-      <a href="https://www.linkedin.com/in/tomersachin/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/nihcas-byte/special-umbrella" target="_blank">GitHub</a>
-    </div>
-  </div>
+  <div class="resume-sheet">
+    <header class="resume-header">
+      <h1 class="rh-name">Sachin Tomer</h1>
+      <div class="rh-title">DevOps Engineer · Terraform · Cloud Infrastructure</div>
+      <div class="rh-meta">
+        <span>📍 Noida / Delhi NCR, India</span>
+        <span>🔗 <a href="https://www.linkedin.com/in/tomersachin/" target="_blank" rel="noopener">linkedin.com/in/tomersachin</a></span>
+        <span>💻 <a href="https://github.com/nihcas-byte/special-umbrella" target="_blank" rel="noopener">github.com/nihcas-byte/special-umbrella</a></span>
+        <span>✉️ contact@sachintomer.dev</span>
+      </div>
+    </header>
 
-  <!-- Stats Bar -->
-  <div class="stats-bar">
-    <div class="stat-cell">
-      <span class="stat-num">9+</span>
-      <span class="stat-lbl">Years IT</span>
-    </div>
-    <div class="stat-cell">
-      <span class="stat-num">5+</span>
-      <span class="stat-lbl">Years Azure</span>
-    </div>
-    <div class="stat-cell">
-      <span class="stat-num">40%</span>
-      <span class="stat-lbl">Faster Deploys</span>
-    </div>
-    <div class="stat-cell">
-      <span class="stat-num">99.9%</span>
-      <span class="stat-lbl">SLA</span>
-    </div>
-  </div>
-
-  <!-- Body -->
-  <div class="resume-body">
-
-    <!-- Summary -->
-    <div class="rs">
-      <div class="rs-title">Summary</div>
-      <p class="summary">
-        DevOps Engineer with 9+ years in IT and 5+ years architecting Azure solutions. Specializes in infrastructure as code (Terraform), CAF Landing Zones, DevSecOps pipelines, and cloud-native automation. Proven track record of cutting deployment time by 40% and maintaining 99.9% SLA across enterprise environments.
+    <section class="section">
+      <div class="section-title">Summary</div>
+      <p class="summary-p">
+        DevSecOps Consultant with 9+ years in IT and 5+ years driving cloud infrastructure automation on Microsoft Azure. Architects secure, production-grade CI/CD pipelines (Azure DevOps YAML) and CAF-aligned Landing Zones, cutting deployment time by 40% across multiple environments through reusable Terraform modules. Embeds security into the pipeline itself using tfsec, Checkov, TruffleHog scanning, and Microsoft Defender for Cloud to catch misconfigurations and leaked secrets before they reach production. Builds centralized observability using Azure Monitor, Log Analytics, Prometheus, and Grafana, and has explored applied AI through a RAG-based knowledge retrieval POC using Azure OpenAI.
       </p>
-    </div>
+    </section>
 
-    <!-- Experience -->
-    <div class="rs">
-      <div class="rs-title">Experience</div>
+    <section class="section">
+      <div class="section-title">Technical Skills</div>
+      <div class="skills-row">
+        <span class="skill-pill">Azure</span>
+        <span class="skill-pill">AWS</span>
+        <span class="skill-pill">Terraform</span>
+        <span class="skill-pill">Tfsec</span>
+        <span class="skill-pill">Checkov</span>
+        <span class="skill-pill">TruffleHog</span>
+        <span class="skill-pill">Azure DevOps</span>
+        <span class="skill-pill">YAML Pipelines</span>
+        <span class="skill-pill">GitHub Actions</span>
+        <span class="skill-pill">PowerShell</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Azure RBAC</span>
+        <span class="skill-pill">Microsoft Entra ID</span>
+        <span class="skill-pill">Azure Monitor</span>
+        <span class="skill-pill">RAG</span>
+        <span class="skill-pill">BlackDuck</span>
+      </div>
+    </section>
 
-      <div class="exp-item">
-        <div class="exp-row">
-          <div class="exp-role">DevOps Engineer</div>
-          <div class="exp-period">May 2022 – Present</div>
+    <section class="section">
+      <div class="section-title">Professional Experience</div>
+
+      <!-- Experience 1 -->
+      <div class="exp-entry">
+        <div class="exp-head">
+          <span class="exp-role">DevOps Engineer</span>
+          <span class="exp-date">05/2022 – Present</span>
         </div>
-        <div class="exp-company">Sify Digital Services</div>
-        <ul class="exp-bullets">
-          <li>Architected Azure CAF Landing Zones with hub-spoke topology, Azure Firewall, and Zero Trust segmentation</li>
-          <li>Built DevSecOps CI/CD integrating tfsec, Checkov, TruffleHog — reduced deployment time by 40%</li>
-          <li>Delivered Azure OpenAI RAG POC for conversational knowledge retrieval from internal docs and Boards</li>
+        <div class="exp-company">Sify Digital Services Limited · Noida, Uttar Pradesh</div>
+        <ul class="exp-ul">
+          <li>Architected management group hierarchies and subscription strategies using Cloud Adoption Framework (CAF) landing zones with hub-spoke topologies, Azure Firewall, and Zero Trust segmentation.</li>
+          <li>Authored reusable Terraform modules and enforced Azure Policy initiatives (allowed SKUs, encryption, mandatory tags), cutting multi-environment deployment times by 40%.</li>
+          <li>Integrated tfsec, Checkov, and TruffleHog security scanners into Azure DevOps YAML pipelines to catch misconfigurations and leaked secrets prior to production release.</li>
+          <li>Implemented encryption at rest and in transit via Azure Key Vault CMK, with DR/backup strategies using Azure Site Recovery aligned to RPO/RTO goals.</li>
+          <li>Developed a Proof-of-Concept leveraging Azure OpenAI (RAG) for conversational knowledge retrieval from internal technical documentation and Azure Boards.</li>
         </ul>
       </div>
 
-      <div class="exp-item">
-        <div class="exp-row">
-          <div class="exp-role">Cloud Operations Engineer</div>
-          <div class="exp-period">Oct 2018 – May 2022</div>
+      <!-- Experience 2 -->
+      <div class="exp-entry">
+        <div class="exp-head">
+          <span class="exp-role">Cloud Operations Engineer</span>
+          <span class="exp-date">10/2018 – 05/2022</span>
         </div>
-        <div class="exp-company">SoftwareOne India</div>
-        <ul class="exp-bullets">
-          <li>Managed multi-tenant Azure IaaS/PaaS, RBAC, and Entra ID for enterprise customers</li>
-          <li>Primary escalation lead for critical incidents maintaining 99.9% SLA</li>
+        <div class="exp-company">SoftwareOne India Private Limited · Gurugram, Haryana</div>
+        <ul class="exp-ul">
+          <li>Provisioned and configured Azure IaaS/PaaS resources across multiple enterprise customer environments.</li>
+          <li>Administered tenant-level RBAC assignments, Microsoft Entra ID (Azure AD) roles, and service provisioning.</li>
+          <li>Served as primary point of contact for enterprise customer operational escalations, maintaining 99.9% SLAs.</li>
         </ul>
       </div>
 
-      <div class="exp-item">
-        <div class="exp-row">
-          <div class="exp-role">Desktop &amp; Network Support Engineer</div>
-          <div class="exp-period">Feb 2018 – Oct 2018</div>
+      <!-- Experience 3 -->
+      <div class="exp-entry">
+        <div class="exp-head">
+          <span class="exp-role">Desktop &amp; Network Support Engineer</span>
+          <span class="exp-date">02/2018 – 10/2018</span>
         </div>
-        <div class="exp-company">Bertelsmann</div>
-        <ul class="exp-bullets">
-          <li>LAN/WAN infrastructure management — switches, patch panels, workstation lifecycle</li>
+        <div class="exp-company">BERTELSMANN MARKETING SERVICES INDIA PVT LTD · Gurugram, Haryana</div>
+        <ul class="exp-ul">
+          <li>Configured and maintained LAN/WAN infrastructure, switches, routers, and patch panels for stable office uptime.</li>
+          <li>Managed end-to-end workstation lifecycle, OS deployments, and access provisioning for onboarding employees.</li>
         </ul>
       </div>
 
-      <div class="exp-item">
-        <div class="exp-row">
-          <div class="exp-role">IT Desktop Support</div>
-          <div class="exp-period">Sep 2015 – Dec 2016</div>
+      <!-- Experience 4 -->
+      <div class="exp-entry">
+        <div class="exp-head">
+          <span class="exp-role">IT Desktop Support Specialist</span>
+          <span class="exp-date">09/2015 – 12/2016</span>
         </div>
-        <div class="exp-company">WeP Solutions</div>
-        <ul class="exp-bullets">
-          <li>IT service desk, incident tracking, and vendor coordination across North India</li>
+        <div class="exp-company">WeP Solutions Ltd. · Chandigarh</div>
+        <ul class="exp-ul">
+          <li>Supported IT service desk operations across regional offices in North India, managing incident tracking and dispatch.</li>
+          <li>Coordinated with hardware vendors to resolve customer printer service requests within SLA limits.</li>
         </ul>
       </div>
+    </section>
 
-    </div>
-
-    <!-- Skills -->
-    <div class="rs">
-      <div class="rs-title">Skills</div>
-      <div class="skills-table">
-        <span class="skill-cat">Cloud</span>
-        <span class="skill-vals">Azure, AWS, CAF Landing Zones, Hub-Spoke, ExpressRoute</span>
-
-        <span class="skill-cat">IaC</span>
-        <span class="skill-vals">Terraform, Azure Policy, PowerShell, Python, Bash</span>
-
-        <span class="skill-cat">DevSecOps</span>
-        <span class="skill-vals">tfsec, Checkov, TruffleHog, Defender for Cloud, Key Vault, Entra ID</span>
-
-        <span class="skill-cat">CI/CD</span>
-        <span class="skill-vals">Azure DevOps, GitHub Actions, YAML Pipelines</span>
-
-        <span class="skill-cat">Observability</span>
-        <span class="skill-vals">Azure Monitor, Log Analytics, Prometheus, Grafana</span>
-
-        <span class="skill-cat">AI</span>
-        <span class="skill-vals">Azure OpenAI, RAG Architecture</span>
+    <section class="section">
+      <div class="section-title">Certifications</div>
+      <div class="cert-grid">
+        <div class="cert-box">
+          <strong>Azure Fundamentals (AZ-900)</strong>
+          <span>Microsoft Azure</span>
+        </div>
+        <div class="cert-box">
+          <strong>Applied Skills: Secure Workload Access</strong>
+          <span>Microsoft Learn · Azure Networking</span>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Certifications -->
-    <div class="rs">
-      <div class="rs-title">Certifications</div>
-      <ul class="cert-list">
-        <li>Microsoft Azure Fundamentals (AZ-900)</li>
-        <li>Microsoft Applied Skills: Configure Secure Access to Workloads Using Azure Networking</li>
-      </ul>
-    </div>
-
-    <!-- Education -->
-    <div class="rs">
-      <div class="rs-title">Education</div>
-      <div class="exp-row">
-        <div class="exp-role" style="font-size:.85rem">B.Tech, Mechanical Engineering</div>
-        <div class="exp-period">2011 – 2015</div>
+    <section class="section">
+      <div class="section-title">Education</div>
+      <div class="edu-entry">
+        <div>
+          <span class="edu-degree">Bachelor of Technology (B. Tech.) — Mechanical Engineering</span>
+          <div class="edu-school">Graphic Era University · Dehradun, Uttarakhand</div>
+        </div>
+        <span class="edu-date">08/2011 – 06/2015</span>
       </div>
-      <div class="exp-company">Graphic Era University</div>
-    </div>
-
+    </section>
   </div>
-</div>
 
 </body>
 </html>

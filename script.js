@@ -1,302 +1,238 @@
-/* =============================================
-   script.js — Sachin Tomer Portfolio
-   ============================================= */
+/* ==========================================================================
+   script.js — Sachin Tomer DevOps Portfolio
+   Interactive Pipeline Terminal, Typewriter, Theme Switcher & Form Handling
+   ========================================================================== */
 
 (function () {
   'use strict';
 
-  /* ── Theme Toggle ──────────────────────────── */
+  /* ── 1. Theme Toggle ─────────────────────────────── */
   const root = document.documentElement;
   const themeBtn = document.getElementById('theme-toggle');
-  const savedTheme = localStorage.getItem('theme') || 'dark';
-  root.setAttribute('data-theme', savedTheme);
-  themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+  const savedTheme = localStorage.getItem('sachin_portfolio_theme') || 'dark';
 
-  themeBtn.addEventListener('click', () => {
-    const current = root.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
-  });
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (themeBtn) {
+      themeBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+      themeBtn.setAttribute('title', `Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`);
+    }
+    localStorage.setItem('sachin_portfolio_theme', theme);
+  }
 
-  /* ── Navbar scroll ─────────────────────────── */
+  applyTheme(savedTheme);
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
+  /* ── 2. Scroll Progress & Active Nav Link ────────── */
   const navbar = document.getElementById('navbar');
   const progressBar = document.getElementById('progress-bar');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
 
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
     const total = document.body.scrollHeight - window.innerHeight;
     const pct = total > 0 ? (scrolled / total) * 100 : 0;
 
-    progressBar.style.width = pct + '%';
-    navbar.classList.toggle('scrolled', scrolled > 40);
+    if (progressBar) {
+      progressBar.style.width = pct + '%';
+    }
 
-    // Active nav link
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-    let current = '';
-    sections.forEach(s => {
-      if (scrolled >= s.offsetTop - 100) current = s.id;
+    if (navbar) {
+      navbar.classList.toggle('scrolled', scrolled > 30);
+    }
+
+    // Scrollspy
+    let currentId = '';
+    sections.forEach((sec) => {
+      const top = sec.offsetTop - 120;
+      if (scrolled >= top) {
+        currentId = sec.getAttribute('id');
+      }
     });
-    navLinks.forEach(a => {
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+
+    navLinks.forEach((link) => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
     });
   }, { passive: true });
 
-  /* ── Mobile Menu ───────────────────────────── */
+  /* ── 3. Mobile Navigation Menu ───────────────────── */
   const burger = document.getElementById('nav-burger');
-  const navLinks = document.getElementById('nav-links');
+  const navLinksList = document.getElementById('nav-links');
 
-  burger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
+  if (burger && navLinksList) {
+    burger.addEventListener('click', () => {
+      navLinksList.classList.toggle('open');
+    });
 
-  navLinks.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => navLinks.classList.remove('open'));
-  });
+    navLinksList.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinksList.classList.remove('open');
+      });
+    });
+  }
 
-  /* ── Typewriter ────────────────────────────── */
+  /* ── 4. Fixed Typewriter Effect ─────────────────── */
+  const typewriterSpan = document.getElementById('typewriter');
   const phrases = [
     'DevOps Engineer',
-    'Azure Architect',
-    'Terraform Expert',
-    'DevSecOps Builder',
-    'Cloud Automation',
+    'Terraform Specialist',
+    'Azure Cloud Architect',
+    'DevSecOps Practitioner',
+    'Cloud Automation Engineer'
   ];
-  const el = document.getElementById('typewriter');
-  if (el) {
-    let pIdx = 0, cIdx = 0, deleting = false;
-    const typeSpeed = 80, deleteSpeed = 45, pauseMs = 1800;
 
-    function tick() {
-      const phrase = phrases[pIdx];
-      if (deleting) {
+  if (typewriterSpan) {
+    let pIdx = 0;
+    let cIdx = 0;
+    let isDeleting = false;
+    const typeSpeed = 75;
+    const deleteSpeed = 35;
+    const pauseTime = 1800;
+
+    function runTypewriter() {
+      const currentPhrase = phrases[pIdx];
+
+      if (isDeleting) {
         cIdx--;
-        el.textContent = phrase.slice(0, cIdx);
+        typewriterSpan.textContent = currentPhrase.slice(0, cIdx);
         if (cIdx === 0) {
-          deleting = false;
+          isDeleting = false;
           pIdx = (pIdx + 1) % phrases.length;
-          setTimeout(tick, 400);
+          setTimeout(runTypewriter, 350);
           return;
         }
-        setTimeout(tick, deleteSpeed);
+        setTimeout(runTypewriter, deleteSpeed);
       } else {
         cIdx++;
-        el.textContent = phrase.slice(0, cIdx);
-        if (cIdx === phrase.length) {
-          deleting = true;
-          setTimeout(tick, pauseMs);
+        typewriterSpan.textContent = currentPhrase.slice(0, cIdx);
+        if (cIdx === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(runTypewriter, pauseTime);
           return;
         }
-        setTimeout(tick, typeSpeed);
+        setTimeout(runTypewriter, typeSpeed);
       }
     }
-    setTimeout(tick, 600);
+
+    setTimeout(runTypewriter, 500);
   }
 
-  /* ── Reveal on scroll ──────────────────────── */
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-  revealEls.forEach((el, i) => {
-    el.style.transitionDelay = (i % 4) * 80 + 'ms';
-    observer.observe(el);
-  });
-
-  /* ── Contact Form ──────────────────────────── */
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('send-btn');
-      btn.textContent = 'Sent ✓';
-      btn.style.background = '#22c55e';
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = 'Send Message →';
-        btn.style.background = '';
-        btn.disabled = false;
-        form.reset();
-      }, 3000);
-    });
-  }
-
-  /* ── Terminal Simulator ────────────────────── */
-  const terminalOutput = document.getElementById('terminal-output');
-  if (!terminalOutput) return;
+  /* ── 5. DevSecOps Terminal Simulator ─────────────── */
+  const termOutput = document.getElementById('terminal-output');
+  const termButtons = document.querySelectorAll('.btn-terminal');
+  let isExecuting = false;
 
   const pipelines = {
-    full: {
-      label: '▶ Run Pipeline',
-      steps: [
-        { type: 'cmd', text: '$ azure-pipeline --env prod --branch main' },
-        { type: 'info', text: '── Stage 1: YAML Lint ─────────────────────' },
-        { type: 'output', text: 'Validating azure-pipeline.yml ...' },
-        { type: 'success', text: '✓ YAML valid — 0 errors, 0 warnings' },
-        { type: 'info', text: '── Stage 2: Security Scan ─────────────────' },
-        { type: 'output', text: 'Running tfsec on ./infra ...' },
-        { type: 'success', text: '✓ tfsec: 0 CRITICAL, 0 HIGH issues' },
-        { type: 'output', text: 'Running Checkov on ./terraform ...' },
-        { type: 'success', text: '✓ Checkov: Passed 47/47 checks' },
-        { type: 'output', text: 'Running TruffleHog --only-verified ...' },
-        { type: 'success', text: '✓ TruffleHog: No secrets detected' },
-        { type: 'info', text: '── Stage 3: Terraform Plan ────────────────' },
-        { type: 'cmd', text: '$ terraform init -backend-config=prod.tfvars' },
-        { type: 'success', text: '✓ Backend initialized (Azure Storage)' },
-        { type: 'cmd', text: '$ terraform plan -out=tfplan' },
-        { type: 'output', text: '  ~ azurerm_firewall_policy_rule_collection  (update)' },
-        { type: 'output', text: '  + azurerm_policy_assignment  (create)' },
-        { type: 'warn',   text: '  Plan: 2 to add, 1 to change, 0 to destroy.' },
-        { type: 'info', text: '── Stage 4: Azure Policy ──────────────────' },
-        { type: 'output', text: 'Evaluating compliance for scope /subscriptions/prod ...' },
-        { type: 'success', text: '✓ 98.4% compliant (64/65 resources)' },
-        { type: 'info', text: '── Stage 5: CAF Deploy ────────────────────' },
-        { type: 'cmd', text: '$ terraform apply tfplan -auto-approve' },
-        { type: 'output', text: 'Applying Landing Zone changes ...' },
-        { type: 'success', text: '✓ azurerm_firewall_policy_rule_collection updated' },
-        { type: 'success', text: '✓ azurerm_policy_assignment created' },
-        { type: 'success', text: '✓ Apply complete! 2 added, 1 changed, 0 destroyed.' },
-        { type: 'success', text: '🚀 Pipeline complete — 40% faster than baseline.' },
-      ]
-    },
-    lint: {
-      label: 'YAML Lint',
-      steps: [
-        { type: 'cmd', text: '$ yamllint azure-pipeline.yml' },
-        { type: 'output', text: 'Linting pipeline definition ...' },
-        { type: 'output', text: 'Checking indentation, syntax, and schema ...' },
-        { type: 'success', text: '✓ No issues found in azure-pipeline.yml' },
-        { type: 'cmd', text: '$ python -m py_compile pipeline_helper.py' },
-        { type: 'success', text: '✓ Python scripts: syntax OK' },
-      ]
-    },
-    scan: {
-      label: 'Security Scan',
-      steps: [
-        { type: 'cmd', text: '$ tfsec ./infra --format json' },
-        { type: 'output', text: 'Scanning Terraform for misconfigurations ...' },
-        { type: 'success', text: '✓ tfsec: 0 CRITICAL  0 HIGH  1 LOW' },
-        { type: 'warn',   text: '  LOW  azurerm_storage_account — consider enabling versioning' },
-        { type: 'cmd', text: '$ checkov -d ./terraform --quiet' },
-        { type: 'output', text: 'Evaluating 47 Checkov policies ...' },
-        { type: 'success', text: '✓ Passed: 47  Failed: 0  Skipped: 0' },
-        { type: 'cmd', text: '$ trufflehog git file://. --only-verified' },
-        { type: 'output', text: 'Scanning commit history for secrets ...' },
-        { type: 'success', text: '✓ No verified secrets detected.' },
-      ]
-    },
-    terraform: {
-      label: 'Terraform',
-      steps: [
-        { type: 'cmd', text: '$ terraform init -backend-config=prod.tfvars' },
-        { type: 'success', text: '✓ Initialized provider azurerm ~> 3.0' },
-        { type: 'success', text: '✓ Backend initialized: Azure Storage Account' },
-        { type: 'cmd', text: '$ terraform validate' },
-        { type: 'success', text: '✓ Configuration is valid.' },
-        { type: 'cmd', text: '$ terraform plan -out=tfplan -var-file=prod.tfvars' },
-        { type: 'output', text: 'Refreshing state from Azure ...' },
-        { type: 'output', text: '  ~ azurerm_firewall_policy_rule_collection (update in-place)' },
-        { type: 'output', text: '  + azurerm_policy_assignment (create)' },
-        { type: 'warn',   text: '  Plan: 2 to add, 1 to change, 0 to destroy.' },
-        { type: 'success', text: '✓ Plan saved to tfplan' },
-      ]
-    },
-    deploy: {
-      label: 'CAF Deploy',
-      steps: [
-        { type: 'info', text: '── CAF Landing Zone Deploy ────────────────' },
-        { type: 'cmd', text: '$ terraform apply tfplan -auto-approve' },
-        { type: 'output', text: 'Provisioning management groups ...' },
-        { type: 'success', text: '✓ Management group hierarchy applied' },
-        { type: 'output', text: 'Deploying hub-spoke network topology ...' },
-        { type: 'success', text: '✓ Hub VNet + Firewall configured' },
-        { type: 'success', text: '✓ Spoke peerings established' },
-        { type: 'output', text: 'Applying Zero Trust network policies ...' },
-        { type: 'success', text: '✓ NSG + Firewall rules enforced' },
-        { type: 'output', text: 'Configuring Azure Policy assignments ...' },
-        { type: 'success', text: '✓ 12 policies assigned to prod subscription' },
-        { type: 'success', text: '🚀 CAF Landing Zone deployed successfully.' },
-      ]
-    },
+    full: [
+      { text: '$ az pipelines validate --pipeline-id 120 --path /azure-pipelines.yml', cls: 'term-dim', delay: 200 },
+      { text: '✔ Azure DevOps YAML syntax: Validated (0 errors)', cls: 'term-green', delay: 350 },
+      { text: '$ tfsec ./terraform/modules/landing-zone --concise-output', cls: 'term-dim', delay: 250 },
+      { text: '✔ tfsec scanner: 0 high/critical issues identified', cls: 'term-green', delay: 400 },
+      { text: '$ checkov -d ./terraform --framework terraform', cls: 'term-dim', delay: 200 },
+      { text: '✔ Checkov: CIS Microsoft Azure Benchmark v2.0 - 100% Passed', cls: 'term-green', delay: 450 },
+      { text: '$ trufflehog git file://. --since-commit HEAD~1', cls: 'term-dim', delay: 250 },
+      { text: '✔ TruffleHog: 0 credentials leaked; Managed Identities validated', cls: 'term-green', delay: 350 },
+      { text: '$ terraform plan -out=tfplan -detailed-exitcode', cls: 'term-dim', delay: 300 },
+      { text: 'Acquired state lock on Azure Storage [container: tfstate]... OK', cls: 'term-dim', delay: 250 },
+      { text: 'Plan: 4 to add, 1 to change, 0 to destroy (Hub-spoke network rules)', cls: 'term-orange', delay: 400 },
+      { text: '$ az policy state summarize --subscription "Enterprise-CAF-Prod"', cls: 'term-dim', delay: 250 },
+      { text: '✔ Mandatory Tags & Allowed Regions (East US, Central India): COMPLIANT', cls: 'term-green', delay: 350 },
+      { text: '🚀 Landing Zone Deployment completed with ZERO downtime.', cls: 'term-orange', delay: 200 }
+    ],
+    lint: [
+      { text: '$ yamllint azure-pipelines.yml --strict', cls: 'term-dim', delay: 200 },
+      { text: '✔ YAML schema formatted according to Azure DevOps specification.', cls: 'term-green', delay: 300 },
+      { text: '$ tflint --recursive --minimum-failure-severity=error', cls: 'term-dim', delay: 250 },
+      { text: '✔ 18 reusable Terraform modules validated cleanly.', cls: 'term-green', delay: 300 }
+    ],
+    scan: [
+      { text: '$ tfsec ./terraform --concise-output', cls: 'term-dim', delay: 200 },
+      { text: '✔ Storage account public access: BLOCKED', cls: 'term-green', delay: 300 },
+      { text: '$ trufflehog git file://. --since-commit HEAD~1 --fail', cls: 'term-dim', delay: 250 },
+      { text: '✔ No plaintext secrets found. Using Azure Key Vault & Managed Identities.', cls: 'term-green', delay: 300 }
+    ],
+    terraform: [
+      { text: '$ terraform init -backend-config="storage_account_name=sifytfstate"', cls: 'term-dim', delay: 200 },
+      { text: 'Initializing remote backend state in Azure Blob Storage... OK', cls: 'term-dim', delay: 300 },
+      { text: '$ terraform plan -detailed-exitcode', cls: 'term-dim', delay: 350 },
+      { text: 'Plan: 2 to add, 0 to change, 0 to destroy. (NSG security rules applied)', cls: 'term-orange', delay: 300 }
+    ],
+    deploy: [
+      { text: '$ terraform apply -auto-approve tfplan', cls: 'term-dim', delay: 250 },
+      { text: 'Applying Azure Firewall rules & Private Endpoints...', cls: 'term-dim', delay: 400 },
+      { text: 'Linking diagnostic logs to Azure Log Analytics Workspace & Prometheus...', cls: 'term-dim', delay: 350 },
+      { text: '✔ Zero-downtime Cloud Adoption Framework (CAF) update applied.', cls: 'term-green', delay: 200 }
+    ]
   };
 
-  let activeKey = 'full';
-  let animTimer = null;
+  async function executePipeline(type) {
+    if (isExecuting || !termOutput) return;
+    isExecuting = true;
+    termOutput.innerHTML = '';
 
-  function clearTerminal() {
-    if (animTimer) clearTimeout(animTimer);
-    terminalOutput.innerHTML = '';
-  }
+    const lines = pipelines[type] || pipelines.full;
 
-  function appendLine(type, text) {
-    const div = document.createElement('div');
-    div.className = 'terminal-line';
-
-    if (type === 'cmd') {
-      div.innerHTML = `<span class="t-prompt">›</span><span class="t-cmd">${escHtml(text.replace(/^\$ /, ''))}</span>`;
-    } else {
-      const cls = {
-        output: 't-output',
-        success: 't-success',
-        warn: 't-warn',
-        error: 't-error',
-        info: 't-info',
-      }[type] || 't-output';
-      div.innerHTML = `<span class="${cls}">${escHtml(text)}</span>`;
+    for (const step of lines) {
+      await new Promise((r) => setTimeout(r, step.delay));
+      const lineDiv = document.createElement('div');
+      lineDiv.className = `term-line ${step.cls || ''}`;
+      lineDiv.textContent = step.text;
+      termOutput.appendChild(lineDiv);
+      termOutput.scrollTop = termOutput.scrollHeight;
     }
 
-    terminalOutput.appendChild(div);
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+    isExecuting = false;
   }
 
-  function escHtml(s) {
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  }
-
-  function runPipeline(key) {
-    clearTerminal();
-    activeKey = key;
-    const pipeline = pipelines[key];
-    if (!pipeline) return;
-
-    let i = 0;
-    function next() {
-      if (i >= pipeline.steps.length) return;
-      const step = pipeline.steps[i++];
-      appendLine(step.type, step.text);
-      const delay = step.type === 'cmd' ? 220 : 90;
-      animTimer = setTimeout(next, delay);
-    }
-    next();
-  }
-
-  // Bind buttons
-  document.querySelectorAll('.btn-terminal').forEach(btn => {
+  termButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-terminal').forEach(b => b.classList.remove('active'));
+      if (isExecuting) return;
+      termButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
-      runPipeline(btn.dataset.pipeline);
+      const pipelineType = btn.getAttribute('data-pipeline');
+      executePipeline(pipelineType);
     });
   });
 
-  // Auto-run on section enter
-  const termSection = document.getElementById('terminal');
-  if (termSection) {
-    const termObs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        runPipeline('full');
-        termObs.unobserve(termSection);
+  /* ── 6. Contact Form ─────────────────────────────── */
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const sendBtn = document.getElementById('send-btn');
+      const name = document.getElementById('contact-name')?.value.trim();
+      const email = document.getElementById('contact-email')?.value.trim();
+      const message = document.getElementById('contact-message')?.value.trim();
+
+      if (!name || !email || !message) {
+        alert('Please fill out all fields.');
+        return;
       }
-    }, { threshold: 0.3 });
-    termObs.observe(termSection);
+
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Message Prepared ✓';
+      }
+
+      const subject = encodeURIComponent(`DevOps & Azure Inquiry from ${name}`);
+      const body = encodeURIComponent(`Hello Sachin,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nBest regards,\n${name}`);
+
+      setTimeout(() => {
+        window.location.href = `mailto:contact@sachintomer.dev?subject=${subject}&body=${body}`;
+        contactForm.reset();
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Send Message →';
+        }
+      }, 500);
+    });
   }
 
 })();
